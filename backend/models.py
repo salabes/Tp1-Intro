@@ -10,6 +10,7 @@ class Jugadores(db.model):
     apellido = db.Column(db.String[255], nullable=false)
     equipo_id = db.Column(db.Integer, db.ForeignKey('equipos.id'))
     posicion_id = db.Column(db.Integer, db.ForeignKey('posiciones.id'))
+    formacion_id = db.Column(db.Integer, db.ForeignKey('formaciones.id'))
     edad = db.Column(db.Integer, nullable=false)
     pie = db.Column(db.String[255], nullable=false)
 
@@ -21,12 +22,13 @@ class Equipos(db.model):
 class Formaciones(db.model):
     __tablename__ = 'formaciones'
     id = db.Column(db.Integer, primary_key=True)
-    tipo_formaciones_id = db.Column(db.Integer, db.ForeignKey('tipo_formaciones.id'))
+    tipo_formacion_id = db.Column(db.Integer, db.ForeignKey('tipo_formaciones.id'))
     equipo_id = db.Column(db.Integer, db.ForeignKey('equipos.id'))
 
 class Tipo_Formaciones(db.model):
     __tablename__ = 'formaciones'
     id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String[255], nullable=false)
 
 class Posiciones(db.model):
     __tablename__ = 'posiciones'
