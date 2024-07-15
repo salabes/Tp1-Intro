@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
-from models import db, Jugadores, Equipos, Formaciones, Tipo_Formaciones, Posiciones
+from models import db, Jugador, Equipo, Formacion, TipoFormacion, Posicion
 
 app = Flask(__name__)
 port = 5000
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://user:password@localhost:5432/basedededatos'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@localhost:5432/ligaargentina'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route('/')

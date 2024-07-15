@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class Jugadores(db.model):
+class Jugador(db.Model):
     __tablename__ = 'jugadores'
     id = db.Column(db.Integer, primary_key=True)
     equipo_id = db.Column(db.Integer, db.ForeignKey('equipos.id'))
@@ -13,28 +13,28 @@ class Jugadores(db.model):
     edad = db.Column(db.Integer, nullable=False)
     pie = db.Column(db.String[255], nullable=False)
 
-class Equipos(db.model):
+class Equipo(db.Model):
     __tablename__ = 'equipos'
     id = db.Column(db.Integer, primary_key=True)
     formacion_id = db.Column(db.Integer, db.ForeignKey('formaciones.id'))
     nombre = db.Column(db.String[255], nullable=False)
 
-class Formaciones(db.model):
+class Formacion(db.Model):
     __tablename__ = 'formaciones'
     id = db.Column(db.Integer, primary_key=True)
     tipo_formacion_id = db.Column(db.Integer, db.ForeignKey('tipo_formaciones.id'))
 
-class Tipo_Formaciones(db.model):
+class TipoFormacion(db.Model):
     __tablename__ = 'tipo_formaciones'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String[255], nullable=False)
 
-class Posiciones(db.model):
+class Posicion(db.Model):
     __tablename__ = 'posiciones'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String[255], nullable=False)
 
-class Ubicaciones(db.model):
+class Ubicacion(db.Model):
     __tablename__ = 'ubicaciones'
     id = db.Column(db.Integer, primary_key=True)
     posicion_id = db.Column(db.Integer, db.ForeignKey('posiciones.id'))
