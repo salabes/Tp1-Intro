@@ -18,6 +18,7 @@ class Equipo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     formacion_id = db.Column(db.Integer, db.ForeignKey('formaciones.id'))
     nombre = db.Column(db.String[255], nullable=False)
+    escudo = db.Column(db.String[300])
 
 class Formacion(db.Model):
     __tablename__ = 'formaciones'

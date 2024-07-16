@@ -20,7 +20,8 @@ def get_equipos():
             equipo_data = {
                 'id': equipo.id,
                 'formacion_id': equipo.formacion_id,
-                'nombre': equipo.nombre
+                'nombre': equipo.nombre,
+                'escudo': equipo.escudo
             }
             equipos_data.append(equipo_data)
         return jsonify(equipos_data)
