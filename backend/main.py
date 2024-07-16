@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from models import db, Jugador, Equipo, Formacion, Posicion, Ubicacion
 
 app = Flask(__name__)
+CORS(app)
 port = 5000
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://nicocazal:postgres@localhost:5432/seleccioneshistoricas'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://santiago:Pinchacapo03@localhost:5432/seleccioneshistoricas'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route('/equipos', methods=['GET'])
@@ -16,7 +18,7 @@ def get_equipos():
             equipo_data = {
                 'id': equipo.id,
                 'formacion_id': equipo.formacion_id,
-                'nombre': equipo.nombre
+                'nombre': equipo.nombre,
                 'escudo': equipo.escudo
             }
             equipos_data.append(equipo_data)
