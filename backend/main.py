@@ -11,6 +11,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 def index():
     return 'Hello World'
 
+@app.route('/equipos', methods=['GET'])
+def get_equipos():
+    try:
+        equipos = Equipo.query.all()
+        equipos_data = []
+        for equipo in equipos:
+            equipo_data = {
+                'id': equipo.id,
+                'formacion_id': equipo.formacion_id,
+                'nombre': equipo.nombre
+            }
+            equipos_data.append(equipo_data)
+        return jsonify(equipos_data)
+    except:
+        return jsonify({"mensaje": "No hay equipos"}), 500
 
 if __name__ == '__main__':
     db.init_app(app)
