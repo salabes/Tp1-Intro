@@ -4,12 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clubes Liga Argentina</title>
+    <title>Selecciones Historicas De Futbol</title>
 </head>
 
 <body>
-    <h1>Equipos Liga Profesional De Fútbol</h1>
 
+    <h1>Selecciones De Fútbol</h1>
+
+    <ul id="lista-selecciones"></ul>
+
+    <script>
+        function responseObtenida(response) {
+            return response.json()
+        }
+
+        function parseData(contenidoResponse) {
+            const listaSelecciones = document.getElementById("lista-selecciones")
+            for(let indice = 0; indice < contenidoResponse.length; indice++) {
+                const equipo = document.createElement("li")
+                equipo.append(contenidoResponse[indice].nombre)
+                listaSelecciones.append(equipo)
+            }
+        }
+
+        function errorRequest(error){
+            console.log("Ocurrio un error", error)
+        }
+        
+        fetch("http://localhost:5000/equipos")
+            .then(responseObtenida)
+            .then(parseData)
+            .catch(errorRequest)
+
+    </script>
 </body>
 
 
