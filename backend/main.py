@@ -43,6 +43,21 @@ def get_equipo(id_equipo):
     except:
         return jsonify({'mensaje': 'Error al obtener el equipo'}), 500
 
+@app.route('/formaciones', methods=['GET'])
+def get_formaciones():
+    try:
+        formaciones = Formacion.query.all()
+        formaciones_data = []
+        for formacion in formaciones:
+            formacion_data = {
+                'id': formacion.id,
+                'nombre': formacion.nombre
+            }
+            formaciones_data.append(formacion_data)
+        return jsonify(formaciones_data)
+    except:
+        return jsonify({'mensaje': 'No hay formaciones'}), 500
+
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
