@@ -26,6 +26,23 @@ def get_equipos():
     except:
         return jsonify({'mensaje': 'No hay equipos'}), 500
 
+@app.route('/equipo/<id_equipo>', methods=['GET'])
+def get_equipo(id_equipo):
+    try:
+        equipo = Equipo.query.get(id_equipo)
+        if not equipo:
+            return jsonify({'mensaje': 'Equipo no encontrado'}), 404
+        
+        equipo_data = {
+            'id': equipo.id,
+            'formacion_id': equipo.formacion_id,
+            'nombre': equipo.nombre,
+            'escudo': equipo.escudo
+        }
+        return jsonify(equipo_data), 200
+    except:
+        return jsonify({'mensaje': 'Error al obtener el equipo'}), 500
+
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
