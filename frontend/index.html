@@ -29,6 +29,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
     </script>
+
     <script>
         function responseObtenida(response) {
             return response.json()
@@ -48,9 +49,10 @@
                 bandera.setAttribute("class","card-img-top")
                 bandera.setAttribute("src",contenidoResponse[indice].escudo)
 
-                const boton = document.createElement("button")
+                const boton = document.createElement("a")
                 boton.setAttribute("class","btn btn-primary")
                 boton.textContent = "Armar formacion"
+                boton.setAttribute("href",`/formacion-equipo?id-equipo=${contenidoResponse[indice].id}`)
 
                 const card_body = document.createElement("div")
                 card_body.setAttribute("class","card-body")
@@ -78,6 +80,5 @@
 
     </script>
 </body>
-
 
 </html>
