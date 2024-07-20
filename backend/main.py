@@ -17,7 +17,6 @@ def get_equipos():
         for equipo in equipos:
             equipo_data = {
                 'id': equipo.id,
-                'formacion_id': equipo.formacion_id,
                 'nombre': equipo.nombre,
                 'escudo': equipo.escudo
             }
@@ -25,38 +24,6 @@ def get_equipos():
         return jsonify(equipos_data)
     except:
         return jsonify({'mensaje': 'No hay equipos'}), 500
-
-@app.route('/equipo/<id_equipo>', methods=['GET'])
-def get_equipo(id_equipo):
-    try:
-        equipo = Equipo.query.get(id_equipo)
-        if not equipo:
-            return jsonify({'mensaje': 'Equipo no encontrado'}), 404
-        
-        equipo_data = {
-            'id': equipo.id,
-            'formacion_id': equipo.formacion_id,
-            'nombre': equipo.nombre,
-            'escudo': equipo.escudo
-        }
-        return jsonify(equipo_data), 200
-    except:
-        return jsonify({'mensaje': 'Error al obtener el equipo'}), 500
-
-@app.route('/formaciones', methods=['GET'])
-def get_formaciones():
-    try:
-        formaciones = Formacion.query.all()
-        formaciones_data = []
-        for formacion in formaciones:
-            formacion_data = {
-                'id': formacion.id,
-                'nombre': formacion.nombre
-            }
-            formaciones_data.append(formacion_data)
-        return jsonify(formaciones_data)
-    except:
-        return jsonify({'mensaje': 'No hay formaciones'}), 500
 
 if __name__ == '__main__':
     db.init_app(app)
