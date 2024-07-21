@@ -179,6 +179,21 @@
             window.location.href = `/jugador/agregar?id-equipo=${idEquipo}&posicion=${analisisPosicion(lugarEnFormacion)}&lugar-en-formacion=${lugarEnFormacion}`
         }
 
+        function eliminarJugador(idJugador) {
+            const confirmacion = confirm("¿Estas seguro que deseas eliminar el jugador? Tendras que cargarlo nuevamente en caso de borrarlo")
+            if (confirmacion) {
+                fetch(`http://localhost:5000/jugadores/${idJugador}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(responseObtenida)
+                    .then(parseDataEliminar)
+                    .catch(errorRequest)
+            }
+        }
+
         function cargarJugadores(jugadoresEnFormacion) {
             let posicionesOcupadas = []
             const cantidadJugadores = jugadoresEnFormacion.length
@@ -207,6 +222,7 @@
                 botonEliminar.setAttribute("class", "btn btn-danger")
                 botonEliminar.innerText = "Eliminar"
                 botonEliminar.setAttribute("style", "margin: 10px")
+                botonEliminar.setAttribute("onclick", `eliminarJugador(${jugadoresEnFormacion[i - 1].id})`)
                 cardBody.append(botonEliminar)
 
                 card.append(cardBody)
@@ -240,6 +256,10 @@
             cargarJugadores(jugadoresEnFormacion)
         }
         
+        function parseDataEliminar(response){
+            window.location.reload()
+        }
+
         function errorRequest(error){
             console.log("Hubo un error", error)
         }
