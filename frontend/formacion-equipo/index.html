@@ -158,7 +158,7 @@
             }else if (lugarEnFormacion === 10 || lugarEnFormacion === 11) {
                 return 8
             }
-}
+        }
 
         function elegirJugador(lugarEnFormacion) {
             window.location.href = `/jugador/agregar?id-equipo=${idEquipo}&posicion=${analisisPosicion(lugarEnFormacion)}&lugar-en-formacion=${lugarEnFormacion}`
@@ -177,6 +177,14 @@
                 cardTitle.setAttribute("class", "card-title")
                 cardTitle.innerText = `${nombreJugador} ${apellidoJugador}`
                 cardBody.append(cardTitle)
+
+                botonEditar = document.createElement("button")
+                botonEditar.setAttribute("class", "btn btn-warning")
+                botonEditar.innerText = "Editar"
+                botonEditar.setAttribute("style", "margin: 10px")
+                botonEditar.setAttribute("onclick", `elegirJugador(${i})`)
+                cardBody.append(botonEditar)
+
                 card.append(cardBody)
                 posicionesOcupadas.push(jugadoresEnFormacion[i - 1].lugar_en_formacion)
             }
