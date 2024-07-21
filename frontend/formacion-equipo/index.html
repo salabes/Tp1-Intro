@@ -139,7 +139,7 @@
         function responseObtenida(response) {
             return response.json()
         }
-        
+
         function cargarJugadores(jugadoresEnFormacion) {
             posicionesOcupadas = []
             const cantidadJugadores = jugadoresEnFormacion.length
@@ -166,6 +166,13 @@
                     cardTitle.setAttribute("class", "card-title")
                     cardTitle.innerText = "Sin asignar"
                     cardBody.append(cardTitle)
+
+                    botonAgregar = document.createElement("button")
+                    botonAgregar.setAttribute("class", "btn btn-success")
+                    botonAgregar.innerText = "Agregar"
+                    botonAgregar.setAttribute("style", "margin: 10px")
+                    cardBody.append(botonAgregar)
+                    
                     card.append(cardBody)
                     posicionesOcupadas.push(j)
                 }
