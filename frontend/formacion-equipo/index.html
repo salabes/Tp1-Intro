@@ -203,6 +203,12 @@
                 botonEditar.setAttribute("onclick", `elegirJugador(${i})`)
                 cardBody.append(botonEditar)
 
+                const botonEliminar = document.createElement("button")
+                botonEliminar.setAttribute("class", "btn btn-danger")
+                botonEliminar.innerText = "Eliminar"
+                botonEliminar.setAttribute("style", "margin: 10px")
+                cardBody.append(botonEliminar)
+
                 card.append(cardBody)
                 posicionesOcupadas.push(jugadoresEnFormacion[i - 1].lugar_en_formacion)
             }
