@@ -117,7 +117,7 @@
     </div>
     <div class="row m-2">
         <div class="col-md-12 d-flex justify-content-center p-3">
-            <div class="card"  id="1">
+            <div class="card" style="width: 18rem;"  id="1">
             </div>
         </div>
     </div>
@@ -136,12 +136,12 @@
         }
 
         function nuevoJugador() {
-            window.location.href = `/jugador/crear/?id-equipo=${idEquipo}`
+            window.location.href = `/jugador/crear?id-equipo=${idEquipo}`
         }
 
         function crearBoton(){
-            crear = document.getElementById("crear")
-            botonCrearJugador = document.createElement("button")
+            const crear = document.getElementById("crear")
+            const botonCrearJugador = document.createElement("button")
             botonCrearJugador.setAttribute("class", "btn btn-secondary")
             botonCrearJugador.textContent = "Agregar Jugador"
             botonCrearJugador.setAttribute("onclick", "nuevoJugador()")
@@ -180,20 +180,23 @@
         }
 
         function cargarJugadores(jugadoresEnFormacion) {
-            posicionesOcupadas = []
+            let posicionesOcupadas = []
             const cantidadJugadores = jugadoresEnFormacion.length
             for (let i = 1; i <= cantidadJugadores; i++) { 
                 const nombreJugador = jugadoresEnFormacion[i - 1].nombre
                 const apellidoJugador = jugadoresEnFormacion[i - 1].apellido
-                card = document.getElementById(jugadoresEnFormacion[i - 1].lugar_en_formacion)
-                cardBody = document.createElement("div")
+                
+                const card = document.getElementById(jugadoresEnFormacion[i - 1].lugar_en_formacion)
+                
+                const cardBody = document.createElement("div")
                 cardBody.setAttribute("class", "card-body")
-                cardTitle = document.createElement("h5")
+                
+                const cardTitle = document.createElement("h5")
                 cardTitle.setAttribute("class", "card-title")
                 cardTitle.innerText = `${nombreJugador} ${apellidoJugador}`
                 cardBody.append(cardTitle)
 
-                botonEditar = document.createElement("button")
+                const botonEditar = document.createElement("button")
                 botonEditar.setAttribute("class", "btn btn-warning")
                 botonEditar.innerText = "Editar"
                 botonEditar.setAttribute("style", "margin: 10px")
@@ -204,17 +207,17 @@
                 posicionesOcupadas.push(jugadoresEnFormacion[i - 1].lugar_en_formacion)
             }
 
-            for (let j = 1; posicionesOcupadas.length <= 11; j++) {
+            for (let j = 1; posicionesOcupadas.length < 11; j++) {
                 if (!posicionesOcupadas.includes(j)) {
-                    card = document.getElementById(j)
-                    cardBody = document.createElement("div")
+                    const card = document.getElementById(j)
+                    const cardBody = document.createElement("div")
                     cardBody.setAttribute("class", "card-body")
-                    cardTitle = document.createElement("h5")
+                    const cardTitle = document.createElement("h5")
                     cardTitle.setAttribute("class", "card-title")
                     cardTitle.innerText = "Sin asignar"
                     cardBody.append(cardTitle)
 
-                    botonAgregar = document.createElement("button")
+                    const botonAgregar = document.createElement("button")
                     botonAgregar.setAttribute("class", "btn btn-success")
                     botonAgregar.innerText = "Agregar"
                     botonAgregar.setAttribute("style", "margin: 10px")
@@ -230,7 +233,6 @@
         function parseData(jugadoresEnFormacion){
             cargarJugadores(jugadoresEnFormacion)
         }
-
         
         function errorRequest(error){
             console.log("Hubo un error", error)
