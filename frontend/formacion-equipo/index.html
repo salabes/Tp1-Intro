@@ -117,7 +117,7 @@
     </div>
     <div class="row m-2">
         <div class="col-md-12 d-flex justify-content-center p-3">
-            <div class="card" style="width: 18rem" id="1">
+            <div class="card" style="width: 12rem" id="1">
             </div>
         </div>
     </div>
@@ -125,7 +125,68 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
-    </script> 
+    </script>
+
+    <script>
+        const parametros = new URLSearchParams(window.location.search)
+        const idEquipo = parametros.get("id-equipo") 
+
+        if (idEquipo === null) {
+            window.location.href = "/"
+        }
+
+        
+        function responseObtenida(response) {
+            return response.json()
+        }
+        
+        function cargarJugadores(jugadoresEnFormacion) {
+            posicionesOcupadas = []
+            const cantidadJugadores = jugadoresEnFormacion.length
+            for (let i = 1; i <= cantidadJugadores; i++) { 
+                const nombreJugador = jugadoresEnFormacion[i - 1].nombre
+                const apellidoJugador = jugadoresEnFormacion[i - 1].apellido
+                card = document.getElementById(jugadoresEnFormacion[i - 1].lugar_en_formacion)
+                cardBody = document.createElement("div")
+                cardBody.setAttribute("class", "card-body")
+                cardTitle = document.createElement("h5")
+                cardTitle.setAttribute("class", "card-title")
+                cardTitle.innerText = `${nombreJugador} ${apellidoJugador}`
+                cardBody.append(cardTitle)
+                card.append(cardBody)
+                posicionesOcupadas.push(jugadoresEnFormacion[i - 1].lugar_en_formacion)
+            }
+
+            for (let j = 1; posicionesOcupadas.length <= 11; j++) {
+                if (!posicionesOcupadas.includes(j)) {
+                    card = document.getElementById(j)
+                    cardBody = document.createElement("div")
+                    cardBody.setAttribute("class", "card-body")
+                    cardTitle = document.createElement("h5")
+                    cardTitle.setAttribute("class", "card-title")
+                    cardTitle.innerText = "Sin asignar"
+                    cardBody.append(cardTitle)
+                    card.append(cardBody)
+                    posicionesOcupadas.push(j)
+                }
+            }  
+        }
+
+        function parseData(jugadoresEnFormacion){
+            cargarJugadores(jugadoresEnFormacion)
+        }
+
+        
+        function errorRequest(error){
+            console.log("Hubo un error", error)
+        }
+        
+        fetch(`http://localhost:5000/equipos/${idEquipo}/formacion`)
+            .then(responseObtenida)
+            .then(parseData)
+            .catch(errorRequest)
+            
+    </script>
     
 </body>
 </html>
