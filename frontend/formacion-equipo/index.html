@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="row m-2">
-        <div class="col-md-1 d-flex justify-content-center p-3">
+        <div class="col-md-1 d-flex justify-content-center p-3" id="crear">
         </div>
         <div class="col-md-1 d-flex justify-content-center p-3">
         </div>
@@ -117,7 +117,7 @@
     </div>
     <div class="row m-2">
         <div class="col-md-12 d-flex justify-content-center p-3">
-            <div class="card" style="width: 12rem" id="1">
+            <div class="card"  id="1">
             </div>
         </div>
     </div>
@@ -134,6 +134,21 @@
         if (idEquipo === null) {
             window.location.href = "/"
         }
+
+        function nuevoJugador() {
+            window.location.href = `/jugador/crear/?id=${idEquipo}`
+        }
+
+        function crearBoton(){
+            crear = document.getElementById("crear")
+            botonCrearJugador = document.createElement("button")
+            botonCrearJugador.setAttribute("class", "btn btn-secondary")
+            botonCrearJugador.textContent = "Agregar Jugador"
+            botonCrearJugador.setAttribute("onclick", "nuevoJugador()")
+            
+            crear.append(botonCrearJugador)
+        }
+        crearBoton()
 
         
         function responseObtenida(response) {
