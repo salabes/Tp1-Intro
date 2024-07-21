@@ -25,7 +25,7 @@ def get_equipos():
     except:
         return jsonify({'mensaje': 'No hay equipos'}), 500
 
-@app.route('/equipo/<id_equipo>/formacion', methods=['GET'])
+@app.route('/equipos/<id_equipo>/formacion', methods=['GET'])
 def get_jugadores_en_formacion(id_equipo):
     try:
         jugadores = Jugador.query.filter(
