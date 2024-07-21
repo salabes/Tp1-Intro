@@ -101,6 +101,24 @@ def crear_jugador(id_equipo):
     except:
         return jsonify({'mensaje': 'Error al crear el jugador'}), 500
 
+
+@app.route('/jugadores/<id_jugador>', methods=['DELETE'])
+def eliminar_jugador(id_jugador):
+    try:
+        jugador = Jugador.query.filter(
+            Jugador.id == id_jugador
+        ).first()
+
+        if not jugador:
+            return jsonify({'mensaje': 'Jugador no encontrado'}), 404
+
+        db.session.delete(jugador)
+        db.session.commit()
+
+        return jsonify({'mensaje': 'El jugador ha sido eliminado correctamente'}), 200
+    except:
+        return jsonify({'mensaje': 'Error al eliminar el jugador'}), 500
+
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
