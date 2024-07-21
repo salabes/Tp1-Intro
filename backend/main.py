@@ -76,6 +76,31 @@ def get_jugadores_por_posicion(id_equipo, id_posicion):
     except:
         return jsonify({'mensaje': 'No hay jugadores en esa posición'}), 500
 
+@app.route('/equipos/<id_equipo>/jugadores', methods=['POST'])
+def crear_jugador(id_equipo):
+    try:
+        nombre = request.json.get('nombre')
+        apellido = request.json.get('apellido')
+        edad = request.json.get('edad')
+        pierna_habil = request.json.get('pierna_habil')
+        posicion_id = request.json.get('posicion_id')
+
+
+        nuevo_jugador = Jugador(
+            nombre=nombre,
+            apellido=apellido,
+            edad=edad,
+            pierna_habil=pierna_habil,
+            equipo_id=id_equipo,
+            posicion_id=posicion_id
+        )
+        db.session.add(nuevo_jugador)
+        db.session.commit()
+
+        return jsonify({'mensaje': 'El jugador se ha creado correctamente'}), 201
+    except:
+        return jsonify({'mensaje': 'Error al crear el jugador'}), 500
+
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
