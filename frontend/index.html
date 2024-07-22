@@ -15,7 +15,7 @@
         <div class="row">
             <div class="text-center">
                 <img src="fifa.png" width="150" height="150" class="copa">
-                <h1>Selecciones de futbol</h1>
+                <h1>Selecciones Historicas De Futbol</h1>
             </div>
         </div>
     </div>
@@ -35,9 +35,12 @@
             return response.json()
         }
 
-        function parseData(contenidoResponse) {
+        function parseData(selecciones) {
             const listaSelecciones = document.getElementById("lista-selecciones")
-            for(let indice = 0; indice < contenidoResponse.length; indice++) {
+            const cantidadSelecciones = selecciones.length
+            for(let indice = 0; indice < cantidadSelecciones; indice++) {
+                const banderaSeleccion = selecciones[indice].escudo
+
                 const seleccion = document.createElement("div")
                 seleccion.setAttribute("class","col-6 col-md-4 col-lg-3 col-xl-2")
                 seleccion.setAttribute("style", "width: 18rem")
@@ -47,23 +50,23 @@
 
                 const bandera = document.createElement("img")
                 bandera.setAttribute("class","card-img-top")
-                bandera.setAttribute("src",contenidoResponse[indice].escudo)
+                bandera.setAttribute("src", banderaSeleccion)
 
-                const boton = document.createElement("a")
-                boton.setAttribute("class","btn btn-primary")
-                boton.textContent = "Armar formacion"
-                boton.setAttribute("href",`/formacion-equipo?id-equipo=${contenidoResponse[indice].id}`)
+                const crearFormacion = document.createElement("a")
+                crearFormacion.setAttribute("class","btn btn-primary")
+                crearFormacion.innerText = "Armar formacion"
+                crearFormacion.setAttribute("href",`/formacion-equipo?id-equipo=${selecciones[indice].id}`)
 
-                const card_body = document.createElement("div")
-                card_body.setAttribute("class","card-body")
+                const cardBody = document.createElement("div")
+                cardBody.setAttribute("class","card-body")
 
-                const texto = document.createElement("span")
-                texto.textContent = contenidoResponse[indice].nombre
+                const nombreSeleccion = document.createElement("span")
+                nombreSeleccion.innerText = selecciones[indice].nombre
                                
-                card_body.append(texto)
+                cardBody.append(nombreSeleccion)
+                cardBody.append(crearFormacion)
                 card.append(bandera)
-                card_body.append(boton)
-                card.append(card_body)
+                card.append(cardBody)
                 seleccion.append(card)
                 listaSelecciones.append(seleccion)
             }
