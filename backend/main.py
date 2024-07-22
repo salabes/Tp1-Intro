@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 port = 5000
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@localhost:5432/seleccioneshistoricas'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://nicocazal:postgres@localhost:5432/seleccioneshistoricas'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route('/equipos', methods=['GET'])
@@ -118,6 +118,40 @@ def eliminar_jugador(id_jugador):
         return jsonify({'mensaje': 'El jugador ha sido eliminado correctamente'}), 200
     except:
         return jsonify({'mensaje': 'Error al eliminar el jugador'}), 500
+
+@app.route('/jugadores/<id_jugador>', methods=['PUT'])
+def agregar_jugador_formacion(id_jugador):
+    try:
+        lugar_en_formacion = request.json.get('lugar_formacion')
+
+        if lugar_en_formacion is None:
+            return jsonify({'mensaje': 'Debes ingresar un lugar en la formacion'}), 400
+        
+        if lugar_en_formacion < 1 or lugar_en_formacion > 11 :
+            return jsonify({'mensaje': 'El lugar en la formacion que ingreso es invalido'}), 400
+        
+
+        jugador = db.session.get(Jugador, id_jugador)
+
+        if jugador is None:
+            return jsonify({'mensaje': 'Jugador no encontrado'}), 404
+        
+        jugador_reeemplazado = Jugador.query.filter(
+            Jugador.equipo_id == jugador.equipo_id,
+            Jugador.lugar_en_formacion == lugar_en_formacion
+        ).first()
+        
+        if jugador_reeemplazado:
+            jugador_reeemplazado.lugar_en_formacion = None
+            db.session.commit()
+
+        jugador.lugar_en_formacion = lugar_en_formacion
+
+        db.session.commit()
+
+        return jsonify({'mensaje': 'Ubicación en la formación actualizada correctamente'}), 200
+    except:
+        return jsonify({'mensaje': 'Error al actualizar la ubicación en la formación'}), 500
 
 if __name__ == '__main__':
     db.init_app(app)
