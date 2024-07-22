@@ -200,8 +200,9 @@
             for (let i = 1; i <= cantidadJugadores; i++) { 
                 const nombreJugador = jugadoresEnFormacion[i - 1].nombre
                 const apellidoJugador = jugadoresEnFormacion[i - 1].apellido
+                const posicionOcupada = jugadoresEnFormacion[i - 1].lugar_en_formacion
                 
-                const card = document.getElementById(jugadoresEnFormacion[i - 1].lugar_en_formacion)
+                const card = document.getElementById(posicionOcupada)
                 
                 const cardBody = document.createElement("div")
                 cardBody.setAttribute("class", "card-body")
@@ -215,7 +216,7 @@
                 botonEditar.setAttribute("class", "btn btn-warning")
                 botonEditar.innerText = "Editar"
                 botonEditar.setAttribute("style", "margin: 10px")
-                botonEditar.setAttribute("onclick", `elegirJugador(${i})`)
+                botonEditar.setAttribute("onclick", `elegirJugador(${posicionOcupada})`)
                 cardBody.append(botonEditar)
 
                 const botonEliminar = document.createElement("button")
@@ -226,13 +227,15 @@
                 cardBody.append(botonEliminar)
 
                 card.append(cardBody)
-                posicionesOcupadas.push(jugadoresEnFormacion[i - 1].lugar_en_formacion)
+                posicionesOcupadas.push(posicionOcupada)
             }
 
-            for (let j = 1; posicionesOcupadas.length < 11; j++) {
+            for (let j = 1; j <= 11; j++) {
                 if (!posicionesOcupadas.includes(j)) {
                     const card = document.getElementById(j)
                     const cardBody = document.createElement("div")
+                    const posicionDesocupada = j
+
                     cardBody.setAttribute("class", "card-body")
                     const cardTitle = document.createElement("h5")
                     cardTitle.setAttribute("class", "card-title")
@@ -243,7 +246,7 @@
                     botonAgregar.setAttribute("class", "btn btn-success")
                     botonAgregar.innerText = "Agregar"
                     botonAgregar.setAttribute("style", "margin: 10px")
-                    botonAgregar.setAttribute("onclick",`elegirJugador(${j})`)
+                    botonAgregar.setAttribute("onclick",`elegirJugador(${posicionDesocupada})`)
                     cardBody.append(botonAgregar)
                     
                     card.append(cardBody)
