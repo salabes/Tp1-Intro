@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 port = 5000
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://nicocazal:postgres@localhost:5432/seleccioneshistoricas'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres@localhost:5432/seleccioneshistoricas'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route('/equipos', methods=['GET'])
@@ -23,7 +23,7 @@ def get_equipos():
             equipos_data.append(equipo_data)
         return jsonify(equipos_data)
     except:
-        return jsonify({'mensaje': 'No hay equipos'}), 500
+        return jsonify({'mensaje': 'No hay equipos'}), 204
 
 @app.route('/equipos/<id_equipo>/formacion', methods=['GET'])
 def get_jugadores_en_formacion(id_equipo):
@@ -48,7 +48,7 @@ def get_jugadores_en_formacion(id_equipo):
             jugadores_data.append(jugador_data)
         return jsonify(jugadores_data)
     except:
-        return jsonify({'mensaje': 'No hay jugadores en la formación'}), 500
+        return jsonify({'mensaje': 'No hay jugadores en la formación'}), 204
 
 @app.route('/equipos/<id_equipo>/posiciones/<id_posicion>', methods=['GET'])
 def get_jugadores_por_posicion(id_equipo, id_posicion):
@@ -74,7 +74,7 @@ def get_jugadores_por_posicion(id_equipo, id_posicion):
             jugadores_data.append(jugador_data)
         return jsonify(jugadores_data)
     except:
-        return jsonify({'mensaje': 'No hay jugadores en esa posición'}), 500
+        return jsonify({'mensaje': 'No hay jugadores en esa posición'}), 204
 
 @app.route('/equipos/<id_equipo>/jugadores', methods=['POST'])
 def crear_jugador(id_equipo):
@@ -146,7 +146,6 @@ def agregar_jugador_formacion(id_jugador):
             db.session.commit()
 
         jugador.lugar_en_formacion = lugar_en_formacion
-
         db.session.commit()
 
         return jsonify({'mensaje': 'Ubicación en la formación actualizada correctamente'}), 200
