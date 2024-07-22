@@ -70,9 +70,12 @@
                 const apellidoJugador = jugadoresDisponibles[indice].apellido
                 nombreCompletoJugador.innerText = `${nombreJugador} ${apellidoJugador}`
 
+                const idJugador = jugadoresDisponibles[indice].id
+
                 const botonAgregar = document.createElement("button")
                 botonAgregar.setAttribute("class","btn btn-success")
                 botonAgregar.innerText = "Agregar"
+                botonAgregar.setAttribute("onclick", `agregarJugador(${idJugador}, ${lugarEnFormacion}, ${idEquipo})`)
 
                 cardBody.append(nombreCompletoJugador)
                 cardBody.append(botonAgregar)
@@ -90,6 +93,36 @@
             .then(responseObtenida)
             .then(parseData)
             .catch(errorRequest)
+
+
+        function responseRecibida(response) {
+            return response.json()
+        }
+
+        function manejoData(data) {
+            window.location.href =`/formacion-equipo?id-equipo=${idEquipo}`
+        }
+
+        function manejoError(error) {
+            console.log('Error al agregar el jugador', error)
+        }
+
+        function agregarJugador(idJugador, lugarEnFormacion, idEquipo) {
+            fetch(`http://localhost:5000/jugadores/${idJugador}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lugar_formacion: lugarEnFormacion
+                })
+            })
+                .then(responseRecibida)
+                .then(manejoData)
+                .catch(manejoError)
+                
+            }
+            
 
     </script>
        
