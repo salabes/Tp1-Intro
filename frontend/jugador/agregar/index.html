@@ -26,6 +26,60 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
     </script>
+
+    <script>
+        const parametros = new URLSearchParams(window.location.search)
+        const idEquipo = parametros.get("id-equipo")
+        const posicion = parametros.get("posicion")
+        const lugarEnFormacion = parametros.get("lugar-en-formacion")
+
+        if (idEquipo === null) {
+            window.location.href = "/"
+        }
+        else if(posicion === null) {
+            window.location.href = `/formacion-equipo?id-equipo=${idEquipo}`
+        }
+
+        function responseObtenida(response) {
+            return response.json()
+        }
+
+        function parseData(jugadoresDisponibles){
+            const listaJugadores = document.getElementById("lista-jugadores")
+            const cantidadJugadores = jugadoresDisponibles.length
+
+            for(let indice = 0; indice < cantidadJugadores; indice++) {
+                const jugador = document.createElement("div")
+                jugador.setAttribute("class","col-6 col-md-4 col-lg-3 col-xl-2")
+                jugador.setAttribute("style", "width: 18rem")
+                const card = document.createElement("div")
+                card.setAttribute("class","card")
+                const cardBody = document.createElement("div")
+                cardBody.setAttribute("class","card-body")
+
+                const nombreCompletoJugador = document.createElement("h5")
+                nombreCompletoJugador.setAttribute("class","card-title")
+                const nombreJugador = jugadoresDisponibles[indice].nombre
+                const apellidoJugador = jugadoresDisponibles[indice].apellido
+                nombreCompletoJugador.innerText = `${nombreJugador} ${apellidoJugador}`
+
+                cardBody.append(nombreCompletoJugador)
+                card.append(cardBody)
+                jugador.append(card)
+                listaJugadores.append(jugador)
+            }
+        }
+        
+        function errorRequest(error){
+            console.log("Ocurrio un error", error)
+        }
+
+        fetch(`http://localhost:5000/equipos/${idEquipo}/posiciones/${posicion}`)
+            .then(responseObtenida)
+            .then(parseData)
+            .catch(errorRequest)
+
+    </script>
        
 </body>
 </html>
