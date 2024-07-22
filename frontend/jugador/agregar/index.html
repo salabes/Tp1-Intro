@@ -63,7 +63,12 @@
                 const apellidoJugador = jugadoresDisponibles[indice].apellido
                 nombreCompletoJugador.innerText = `${nombreJugador} ${apellidoJugador}`
 
+                const botonAgregar = document.createElement("button")
+                botonAgregar.setAttribute("class","btn btn-success")
+                botonAgregar.innerText = "Agregar"
+
                 cardBody.append(nombreCompletoJugador)
+                cardBody.append(botonAgregar)
                 card.append(cardBody)
                 jugador.append(card)
                 listaJugadores.append(jugador)
